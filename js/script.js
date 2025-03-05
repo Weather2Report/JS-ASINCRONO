@@ -75,9 +75,15 @@ $("#btnJQuery").click(function () {
 // Axios
 document.getElementById("btnAxios").addEventListener("click", function () {
     axios
-        .get("https://jsonplaceholder.typicode.com/posts/3")
+$        .get("https://jsonplaceholder.typicode.com/albums")
         .then(function (response) {
-            document.getElementById("resultAxios").textContent = response.data.title;
+            
+            console.log(response.data);
+            
+            response.data.forEach(function(elem){
+                $("#resultAxios").append("<li>" + elem.title + "<li>");
+            })
+            
         })
         .catch(function (error) {
             console.error("Error Axios:", error);
@@ -111,3 +117,25 @@ function cargarAxios() {
         document.getElementById("resultadoFinal").textContent = response.data.title;
     });
 }
+
+
+$("#btnImg").on("click",function(){
+    fetch("https://dummyjson.com/recipes/1")
+        .then(function(response){
+            if(!response.ok){
+                throw new  Error("Network response was not ok")
+            }
+            return response.json();
+            
+        })
+        .then(function(response){
+            console.log(response);
+            $("#imgCont").append('<img src="' + response.image + '" alt="imagen de Api">')
+            
+
+        })
+        .catch(function(error){
+            console.log(error);
+        }       
+        )
+})
